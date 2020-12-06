@@ -1,5 +1,6 @@
 package com.pixeon.HealthCareInstitution.Controller;
 
+import com.pixeon.HealthCareInstitution.DTO.ExamDTO;
 import com.pixeon.HealthCareInstitution.Model.Exam;
 import com.pixeon.HealthCareInstitution.Service.ExamService;
 import com.pixeon.HealthCareInstitution.Utils.DataResponse;
@@ -20,7 +21,7 @@ public class ExamController {
 
 
     @PostMapping("/create")
-    public ResponseEntity<DataResponse<Exam>> createExam(@RequestBody Exam exam) {
+    public ResponseEntity<DataResponse<ExamDTO>> createExam(@RequestBody ExamDTO exam) {
         try {
             return examService.createExam(exam);
         } catch (Exception e) {
@@ -34,7 +35,7 @@ public class ExamController {
     }
 
     @PostMapping("/retrieve-exam/{idExam}/{cnpjHealthCareInstitution}")
-    public ResponseEntity<DataResponse<Exam>> retrieveExam(@PathVariable Long idExam, @PathVariable String cnpjHealthCareInstitution) {
+    public ResponseEntity<DataResponse<ExamDTO>> retrieveExam(@PathVariable Long idExam, @PathVariable String cnpjHealthCareInstitution) {
         try {
             return examService.retrieveExam(idExam, cnpjHealthCareInstitution);
         } catch (Exception e) {
@@ -43,7 +44,7 @@ public class ExamController {
     }
 
     @PutMapping("/update-exam/{id}")
-    public ResponseEntity<Exam> updateExam(@PathVariable Long id, @RequestBody Exam exam) {
+    public ResponseEntity<ExamDTO> updateExam(@PathVariable Long id, @RequestBody Exam exam) {
         return examService.updateExam(id, exam);
     }
 

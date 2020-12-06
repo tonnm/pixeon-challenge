@@ -14,5 +14,10 @@ public class ExamDTO {
     private String patientName;
     private Long patientAge;
     private String patientGender;
+    private Boolean isRetrieved;
+    private String physicianName;
+    private String physicianCRM;
+    private String ProcedureName;
+
     private HealthCareInstitution healthCareInstitution;
 }
