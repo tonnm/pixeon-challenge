@@ -1,9 +1,10 @@
-package com.pixeon.HealthCareInstitution.Service;
+package com.pixeon.PixeonChallenge.Service;
 
-import com.pixeon.HealthCareInstitution.DTO.HealthCareInstitutionDTO;
-import com.pixeon.HealthCareInstitution.Model.HealthCareInstitution;
-import com.pixeon.HealthCareInstitution.Repository.HealthCareInstitutionRepository;
-import com.pixeon.HealthCareInstitution.Utils.DataResponse;
+import com.pixeon.PixeonChallenge.DTO.HealthCareInstitutionDTO;
+import com.pixeon.PixeonChallenge.Model.HealthCareInstitution;
+import com.pixeon.PixeonChallenge.Repository.HealthCareInstitutionRepository;
+import com.pixeon.PixeonChallenge.Utils.Constants;
+import com.pixeon.PixeonChallenge.Utils.DataResponse;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -21,7 +22,7 @@ public class HealthCareInstitutionService {
         ModelMapper modelMapper = new ModelMapper();
         healthCareInstitutionDTO.setPixeonCoins(20);
         HealthCareInstitution healthCareInstitution = modelMapper.map(healthCareInstitutionDTO, HealthCareInstitution.class);
-        dataResponse.setMessage("Healthcare Institution created with success.");
+        dataResponse.setMessage(Constants.HEALTHCARE_CREATED);
         healthCareInstitutionRepository.save(healthCareInstitution);
         dataResponse.setData(healthCareInstitutionDTO);
         return ResponseEntity.status(HttpStatus.CREATED).body(dataResponse);

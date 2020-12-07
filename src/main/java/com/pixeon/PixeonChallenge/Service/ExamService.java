@@ -1,15 +1,19 @@
-package com.pixeon.HealthCareInstitution.Service;
+package com.pixeon.PixeonChallenge.Service;
 
-import com.pixeon.HealthCareInstitution.DTO.ExamDTO;
-import com.pixeon.HealthCareInstitution.Model.Exam;
-import com.pixeon.HealthCareInstitution.Model.HealthCareInstitution;
-import com.pixeon.HealthCareInstitution.Repository.ExamRepository;
-import com.pixeon.HealthCareInstitution.Utils.DataResponse;
+import com.pixeon.PixeonChallenge.DTO.ExamDTO;
+import com.pixeon.PixeonChallenge.Model.Exam;
+import com.pixeon.PixeonChallenge.Model.HealthCareInstitution;
+import com.pixeon.PixeonChallenge.Repository.ExamRepository;
+import com.pixeon.PixeonChallenge.Utils.DataResponse;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+
+import java.util.Objects;
+
+import static com.pixeon.PixeonChallenge.Utils.Constants.*;
 
 @Service
 public class ExamService {
@@ -31,13 +35,13 @@ public class ExamService {
                 exam.setIsRetrieved(false);
                 examRepository.save(exam);
                 examDataResponse.setData(examDTO);
-                examDataResponse.setMessage("Exam created with success.");
+                examDataResponse.setMessage(EXAM_CREATED);
             } else {
-                examDataResponse.setMessage("This Healthcare Institution don't have enough Pixeon coin.");
+                examDataResponse.setMessage(INSUFFICIENT_PIXEON_CURRENCY);
                 return ResponseEntity.status(HttpStatus.OK).body(examDataResponse);
             }
         } else {
-            examDataResponse.setMessage("HealthCare Institution not found.");
+            examDataResponse.setMessage(HEALTHCARE_NOT_FOUND);
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(examDataResponse);
         }
         return ResponseEntity.status(HttpStatus.CREATED).body(examDataResponse);
@@ -45,9 +49,9 @@ public class ExamService {
 
     public ResponseEntity<DataResponse<ExamDTO>> retrieveExam(Long idExam, String cnpjHealthCareInstitution) {
         ResponseEntity<DataResponse<ExamDTO>> examResponse = findExamById(idExam);
-        ExamDTO examDTO = examResponse.getBody().getData();
         DataResponse<ExamDTO> examDataResponse = new DataResponse<>();
-        if (examDTO != null) {
+        if (Objects.requireNonNull(examResponse.getBody()).getData() != null) {
+            ExamDTO examDTO = examResponse.getBody().getData();
             if (examDTO.getHealthCareInstitution().getCnpj().equals(cnpjHealthCareInstitution)) {
                 ModelMapper modelMapper = new ModelMapper();
                 if (!examDTO.getIsRetrieved()) {
@@ -56,15 +60,15 @@ public class ExamService {
                     Exam exam = modelMapper.map(examDTO, Exam.class);
                     examRepository.save(exam);
                 }
-                examDataResponse.setMessage("Exam retrieved with success.");
+                examDataResponse.setMessage(EXAM_RETRIEVED);
                 examDataResponse.setData(examDTO);
                 return ResponseEntity.status(HttpStatus.OK).body(examDataResponse);
             } else {
-                examDataResponse.setMessage("This Healthcare Institution don't have permission to access this exam.");
+                examDataResponse.setMessage(HEALTHCARE_UNAUTHORIZED);
                 return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(examDataResponse);
             }
         }
-        examDataResponse.setMessage("Exam not found.");
+        examDataResponse.setMessage(EXAM_NOT_FOUND);
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(examDataResponse);
     }
 
@@ -72,13 +76,13 @@ public class ExamService {
         DataResponse<ExamDTO> examDTODataResponse = new DataResponse<>();
         Exam exam = examRepository.findById(id).orElse(null);
         if (exam != null) {
-            examDTODataResponse.setMessage("Exam found with success.");
+            examDTODataResponse.setMessage(EXAM_FOUND);
             ModelMapper modelMapper = new ModelMapper();
             ExamDTO examDTO = modelMapper.map(exam, ExamDTO.class);
             examDTODataResponse.setData(examDTO);
             return ResponseEntity.status(HttpStatus.OK).body(examDTODataResponse);
         }
-        examDTODataResponse.setMessage("Exam not found.");
+        examDTODataResponse.setMessage(EXAM_NOT_FOUND);
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(examDTODataResponse);
     }
 
@@ -91,7 +95,7 @@ public class ExamService {
             ModelMapper modelMapper = new ModelMapper();
             ExamDTO examUpdated = modelMapper.map(examRepository.save(record), ExamDTO.class);
             examDTODataResponse.setData(examUpdated);
-            examDTODataResponse.setMessage("Exam updated with success.");
+            examDTODataResponse.setMessage(EXAM_UPDATED);
             return ResponseEntity.status(HttpStatus.OK).body(examDTODataResponse);
         }).orElse(ResponseEntity.status(HttpStatus.NOT_FOUND).body(examDTODataResponse));
     }

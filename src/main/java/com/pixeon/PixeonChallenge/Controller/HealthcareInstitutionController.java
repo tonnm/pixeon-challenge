@@ -1,9 +1,8 @@
-package com.pixeon.HealthCareInstitution.Controller;
+package com.pixeon.PixeonChallenge.Controller;
 
-import com.pixeon.HealthCareInstitution.DTO.HealthCareInstitutionDTO;
-import com.pixeon.HealthCareInstitution.Model.HealthCareInstitution;
-import com.pixeon.HealthCareInstitution.Service.HealthCareInstitutionService;
-import com.pixeon.HealthCareInstitution.Utils.DataResponse;
+import com.pixeon.PixeonChallenge.DTO.HealthCareInstitutionDTO;
+import com.pixeon.PixeonChallenge.Service.HealthCareInstitutionService;
+import com.pixeon.PixeonChallenge.Utils.DataResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -17,7 +16,7 @@ public class HealthcareInstitutionController {
 
     @Autowired
     private HealthCareInstitutionService healthCareInstitutionService;
-    
+
     @PostMapping
     public ResponseEntity<DataResponse<HealthCareInstitutionDTO>> create(@RequestBody HealthCareInstitutionDTO healthCareInstitutionDTO) {
         return healthCareInstitutionService.createHealthCareInstitution(healthCareInstitutionDTO);

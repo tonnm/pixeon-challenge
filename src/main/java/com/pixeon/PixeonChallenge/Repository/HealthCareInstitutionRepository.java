@@ -1,6 +1,6 @@
-package com.pixeon.HealthCareInstitution.Repository;
+package com.pixeon.PixeonChallenge.Repository;
 
-import com.pixeon.HealthCareInstitution.Model.HealthCareInstitution;
+import com.pixeon.PixeonChallenge.Model.HealthCareInstitution;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

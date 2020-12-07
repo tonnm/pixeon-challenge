@@ -1,4 +1,4 @@
-package com.pixeon.HealthCareInstitution;
+package com.pixeon.PixeonChallenge;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.boot.SpringApplication;
@@ -6,10 +6,10 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 
 @SpringBootApplication
-public class HealthCareInstitutionApplication {
+public class PixeonChallengeApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(HealthCareInstitutionApplication.class, args);
+        SpringApplication.run(PixeonChallengeApplication.class, args);
 
     }
 

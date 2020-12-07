@@ -1,6 +1,6 @@
-package com.pixeon.HealthCareInstitution.DTO;
+package com.pixeon.PixeonChallenge.DTO;
 
-import com.pixeon.HealthCareInstitution.Model.HealthCareInstitution;
+import com.pixeon.PixeonChallenge.Model.HealthCareInstitution;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;

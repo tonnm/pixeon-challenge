@@ -1,9 +1,9 @@
-package com.pixeon.HealthCareInstitution.Controller;
+package com.pixeon.PixeonChallenge.Controller;
 
-import com.pixeon.HealthCareInstitution.DTO.ExamDTO;
-import com.pixeon.HealthCareInstitution.Model.Exam;
-import com.pixeon.HealthCareInstitution.Service.ExamService;
-import com.pixeon.HealthCareInstitution.Utils.DataResponse;
+import com.pixeon.PixeonChallenge.DTO.ExamDTO;
+import com.pixeon.PixeonChallenge.Model.Exam;
+import com.pixeon.PixeonChallenge.Service.ExamService;
+import com.pixeon.PixeonChallenge.Utils.DataResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

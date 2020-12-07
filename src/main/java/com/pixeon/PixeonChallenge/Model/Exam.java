@@ -1,4 +1,4 @@
-package com.pixeon.HealthCareInstitution.Model;
+package com.pixeon.PixeonChallenge.Model;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

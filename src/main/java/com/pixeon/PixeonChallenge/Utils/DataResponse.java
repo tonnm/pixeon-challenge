@@ -1,4 +1,4 @@
-package com.pixeon.HealthCareInstitution.Utils;
+package com.pixeon.PixeonChallenge.Utils;
 
 import lombok.*;
 
