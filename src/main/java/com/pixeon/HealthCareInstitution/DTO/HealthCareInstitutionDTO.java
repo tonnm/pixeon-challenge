@@ -1,28 +1,17 @@
-package com.pixeon.HealthCareInstitution.Model;
+package com.pixeon.HealthCareInstitution.DTO;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.*;
-
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-@Entity
-public class HealthCareInstitution {
+public class HealthCareInstitutionDTO {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
-    @Column
     private String name;
-
-    @Column(unique = true)
     private String cnpj;
-
-    @Column
     private Integer pixeonCoins;
 
 }

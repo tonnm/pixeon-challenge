@@ -44,17 +44,18 @@ public class ExamService {
     }
 
     public ResponseEntity<DataResponse<ExamDTO>> retrieveExam(Long idExam, String cnpjHealthCareInstitution) {
-        Exam exam = findExamById(idExam);
+        ResponseEntity<DataResponse<ExamDTO>> examResponse = findExamById(idExam);
+        ExamDTO examDTO = examResponse.getBody().getData();
         DataResponse<ExamDTO> examDataResponse = new DataResponse<>();
-        if (exam != null) {
-            if (exam.getHealthCareInstitution().getCnpj().equals(cnpjHealthCareInstitution)) {
-                if (!exam.getIsRetrieved()) {
+        if (examDTO != null) {
+            if (examDTO.getHealthCareInstitution().getCnpj().equals(cnpjHealthCareInstitution)) {
+                ModelMapper modelMapper = new ModelMapper();
+                if (!examDTO.getIsRetrieved()) {
                     healthCareInstitutionService.removePixeonCoin(cnpjHealthCareInstitution);
-                    exam.setIsRetrieved(true);
+                    examDTO.setIsRetrieved(true);
+                    Exam exam = modelMapper.map(examDTO, Exam.class);
                     examRepository.save(exam);
                 }
-                ModelMapper modelMapper = new ModelMapper();
-                ExamDTO examDTO = modelMapper.map(exam, ExamDTO.class);
                 examDataResponse.setMessage("Exam retrieved with success.");
                 examDataResponse.setData(examDTO);
                 return ResponseEntity.status(HttpStatus.OK).body(examDataResponse);
@@ -67,19 +68,32 @@ public class ExamService {
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(examDataResponse);
     }
 
-    public Exam findExamById(Long id) {
-        return examRepository.findById(id).orElse(null);
+    public ResponseEntity<DataResponse<ExamDTO>> findExamById(Long id) {
+        DataResponse<ExamDTO> examDTODataResponse = new DataResponse<>();
+        Exam exam = examRepository.findById(id).orElse(null);
+        if (exam != null) {
+            examDTODataResponse.setMessage("Exam found with success.");
+            ModelMapper modelMapper = new ModelMapper();
+            ExamDTO examDTO = modelMapper.map(exam, ExamDTO.class);
+            examDTODataResponse.setData(examDTO);
+            return ResponseEntity.status(HttpStatus.OK).body(examDTODataResponse);
+        }
+        examDTODataResponse.setMessage("Exam not found.");
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(examDTODataResponse);
     }
 
-    public ResponseEntity<ExamDTO> updateExam(Long id, Exam exam) {
+    public ResponseEntity<DataResponse<ExamDTO>> updateExam(Long id, Exam exam) {
+        DataResponse<ExamDTO> examDTODataResponse = new DataResponse<>();
         return examRepository.findById(id).map(record -> {
             record.setPatientName(exam.getPatientName());
             record.setPatientAge(exam.getPatientAge());
             record.setPatientGender(exam.getPatientGender());
             ModelMapper modelMapper = new ModelMapper();
             ExamDTO examUpdated = modelMapper.map(examRepository.save(record), ExamDTO.class);
-            return ResponseEntity.ok().body(examUpdated);
-        }).orElse(ResponseEntity.notFound().build());
+            examDTODataResponse.setData(examUpdated);
+            examDTODataResponse.setMessage("Exam updated with success.");
+            return ResponseEntity.status(HttpStatus.OK).body(examDTODataResponse);
+        }).orElse(ResponseEntity.status(HttpStatus.NOT_FOUND).body(examDTODataResponse));
     }
 
     public ResponseEntity<?> deleteExam(Long id) {

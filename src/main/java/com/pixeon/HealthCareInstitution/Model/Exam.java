@@ -17,12 +17,25 @@ public class Exam {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column
     private String patientName;
+
+    @Column
     private Long patientAge;
+
+    @Column
     private String patientGender;
+
+    @Column
     private Boolean isRetrieved;
+
+    @Column
     private String physicianName;
+
+    @Column
     private String physicianCRM;
+
+    @Column
     private String ProcedureName;
 
     @JoinColumn

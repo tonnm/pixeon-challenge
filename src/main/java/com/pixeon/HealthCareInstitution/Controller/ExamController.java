@@ -30,8 +30,8 @@ public class ExamController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Exam> findExamById(@PathVariable Long id) {
-        return ResponseEntity.status(HttpStatus.OK).body(examService.findExamById(id));
+    public ResponseEntity<DataResponse<ExamDTO>> findExamById(@PathVariable Long id) {
+        return examService.findExamById(id);
     }
 
     @PostMapping("/retrieve-exam/{idExam}/{cnpjHealthCareInstitution}")
@@ -44,8 +44,12 @@ public class ExamController {
     }
 
     @PutMapping("/update-exam/{id}")
-    public ResponseEntity<ExamDTO> updateExam(@PathVariable Long id, @RequestBody Exam exam) {
-        return examService.updateExam(id, exam);
+    public ResponseEntity<DataResponse<ExamDTO>> updateExam(@PathVariable Long id, @RequestBody Exam exam) {
+        try {
+            return examService.updateExam(id, exam);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
     }
 
     @DeleteMapping("/delete-exam/{id}")
