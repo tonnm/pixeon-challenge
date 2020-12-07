@@ -1,1 +1,1 @@
-# pixeon-test
+# Pixeon Challenge
